@@ -1,8 +1,7 @@
-// 界面变量调整
+// gsap 动画
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import gsap from 'gsap'
-import * as dat from 'dat.gui'
 export default function (dom) {
     // 1、创建场景
     const scene = new THREE.Scene();
@@ -32,36 +31,15 @@ export default function (dom) {
     // cube.rotation.set(Math.PI / 4, 0, 0,'XYZ')
     // 将几何体添加到场景中
     scene.add(cube);
-    // 创建gui  界面参数调整
-    const gui = new dat.GUI()
-    gui.add(cube.position, 'x').min(0).max(5).step(0.01).name('移动x轴').onChange((value) => {
-        console.log('onChange', value)
-    }).onFinishChange(value => {
-        console.log('onFinishChange', value)
-    })
-    // 修改物体颜色 
-    const params = {
-        color: "#FFFF00",
-        fn() {
-            console.log('执行函数')
-            gsap.to(cube.position, { x: 5, duration: 2, yoyo: true, repeat: -1 })
-        }
-    }
-    gui.addColor(params, "color").onFinishChange(value => {
-        console.log('onFinishChange', value)
-        cube.material.color.set(value)
-    })
-    gui.add(cube, "visible").name('是否显示')
+
     // 初始化渲染器
     const renderer = new THREE.WebGLRenderer();
     // 设置渲染的尺寸大小
     renderer.setSize(window.innerWidth, window.innerHeight);
     // console.log(renderer);
-    // 点击触发某个事件 设置选项框
-    gui.add(params, 'fn').name('开始动画')
-    // 添加文件夹
-    const folder = gui.addFolder("设置立方体")
-    folder.add(cube.material, "wireframe")
+    console.log(dom.current)
+    // 将webgl渲染的canvas内容添加到body
+
 
     dom.current?.appendChild(renderer.domElement);
 
@@ -69,6 +47,19 @@ export default function (dom) {
     const controls = new OrbitControls(camera, renderer.domElement)
     // 阻尼器
     controls.enableDamping = true
+    const animation1 = gsap.to(cube.position, {
+        x: 5, duration: 5, ease: 'power1.inOut', repeat: -1, yoyo: true, delay: 2, onStart() {
+            console.log('动画开始')
+        }, onComplete() {
+            console.log('动画完成')
+        }
+    })
+    gsap.to(cube.rotation, { x: 2 * Math.PI, duration: 5, ease: 'power1.inOut', repeat: 1 })
+
+    window.addEventListener('dblclick', () => {
+        document.fullscreenElement ? document.exitFullscreen() : renderer.domElement.requestFullscreen()
+
+    })
     //  设置动画
     function render() {
         controls.update()
