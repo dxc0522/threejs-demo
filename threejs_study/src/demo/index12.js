@@ -20,21 +20,18 @@ export default async function (dom) {
     scene.add(axesHelper)
     // 添加纹理
     const textureLoad = new THREE.TextureLoader()
-    const doorImage = await textureLoad.load('/hives_icon_decline.png')
-    // // 纹理设置
-    // doorImage.offset.x = 0.2
-    // doorImage.offset.y = 0.2
-    // doorImage.rotation = 0.25 * Math.PI
-    // doorImage.center.set(0.5, 0.5)
-    // // 同一面2v重复次数
-    // doorImage.repeat.set(2, 3)
-    // // 坐标轴重复模式
-    // doorImage.wrapS = THREE.RepeatWrapping
-    // doorImage.wrapT = THREE.MirroredRepeatWrapping
-    // console.log(doorImage)
-    // 设置放大滤镜为与纹理最接近的一种
-    doorImage.magFilter = THREE.NearestFilter
-    doorImage.minFilter = THREE.LinearFilter
+    const doorImage = await textureLoad.load('/door.jpg')
+    // 纹理设置
+    doorImage.offset.x = 0.2
+    doorImage.offset.y = 0.2
+    doorImage.rotation = 0.25 * Math.PI
+    doorImage.center.set(0.5, 0.5)
+    // 同一面2v重复次数
+    doorImage.repeat.set(2, 3)
+    // 坐标轴重复模式
+    doorImage.wrapS = THREE.RepeatWrapping
+    doorImage.wrapT = THREE.MirroredRepeatWrapping
+    console.log(doorImage)
     // 创建几何体
     const cubeGeometry = new THREE.BoxBufferGeometry(1, 1, 1)
     const basicMaterial = new THREE.MeshBasicMaterial({
