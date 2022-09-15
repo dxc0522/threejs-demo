@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
-import initThreeJs from './demo/index'
+// import initThreeJs from './demo/index'
+import initThreeJs from './page/index'
 function App() {
 	const threeJSDom = useRef()
 	const [count, setCount] = useState(0)
